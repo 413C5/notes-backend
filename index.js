@@ -150,7 +150,7 @@ const unknownPath = (request, response) => {
 app.use(unknownPath)
 
 //En que puerto se atendera el servidor
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 
 
 app.listen(PORT, () => {
