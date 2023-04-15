@@ -47,9 +47,14 @@ app.get('/api/notes/:id', (request, response) => {
 //Modificacion extra
 app.delete('/api/notes/:id', (request, response) => {
     Note.findByIdAndRemove(request.params.id)
-      .then(result => {
-        response.status(204).send()
-      })
+    .then(result => {
+      if (result!==null) {
+          response.status(204).send()
+      } 
+      else {
+          response.status(404).send()
+      }
+  })
       .catch(error =>{
         console.log(error)
         response.status(404).send()
