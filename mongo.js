@@ -17,6 +17,7 @@ const message=process.argv[3]
 
 const url = `mongodb+srv://fullstack:${password}@cluster0.ezwn4oa.mongodb.net/app-note?retryWrites=true&w=majority`
 
+mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
 const noteSchema = new mongoose.Schema({
