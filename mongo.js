@@ -28,11 +28,11 @@ const noteSchema = new mongoose.Schema({
 
 const Note= mongoose.model('Note',noteSchema)
 
-const note=new Note({
-    content:message,
-    date:new Date(),
-    important:true
-})
+const note = new Note({
+    content: message,
+    date: new Date(),
+    important: true,
+  })
 
 //Insert
 /* note.save().then(result=>{
