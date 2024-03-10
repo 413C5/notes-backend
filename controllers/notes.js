@@ -1,83 +1,42 @@
 const notesRouter = require('express').Router()
 const Note = require('../models/note')
 
-notesRouter.get('/', (request, response) => {
-  Note.find({})
-    .then(notes => {
-      response.json(notes)
-    })
-    .catch(error => {
-      console.log(error)
-      response.status(500).send('Internal Server Error')
-    })
+
+notesRouter.get('/', async (request, response) => {
+  const notes = await Note.find({})
+  response.json(notes)
 })
 
-notesRouter.get('/:id', (request, response, next) => {
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note)
-      }
-      else {
-        response.status(404).end()
-      }
-    })
-    .catch(error => {
-      next(error)
-      //console.log(error)
-      //response.status(400).send({ error: 'malformatted id' })
-    })
+notesRouter.get('/:id', async (request, response) => {
+  const note = await Note.findById(request.params.id)
+  if (note) {
+    response.json(note)
+  } 
+  else {
+    response.status(404).end()
+  }
 })
 
-notesRouter.delete('/:id', (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
-    .then(result => {
-      if (result !== null) {
-        response.status(204).send()
-      }
-      else {
-        response.status(404).send()
-      }
-    })
-    .catch(error => {
-      next(error)
-      //console.log(error)
-      //response.status(404).send()
-    })
+
+notesRouter.delete('/:id', async (request, response) => {
+  await Note.findByIdAndRemove(request.params.id)
+  response.status(204).end()
 })
 
-notesRouter.post('/', (request, response, next) => {
+
+notesRouter.post('/', async (request, response) => {
   //Tiene que tener la sintaxis del objeto
   const body = request.body
-  console.log(body)
-  if (!body.content) {
-    return response.status(400).json({
-      error: 'content missing'
-    })
-  }
+
   const note = new Note({
     content: body.content,
     important: body.important || false,
     date: new Date()
   })
 
-  /* const note = Note({
-    content: body.content,
-    important: body.important || false,
-    date: new Date()
-  }) */
-
-  note.save()
-    .then(savedNote => {
-      response.json(savedNote)
-    })
-    .catch(error => {
-      next(error)
-      //console.log(error)
-      //response.status(500).send('Internal Server Error');
-    })
+  const savedNote = await note.save()
+  response.status(201).json(savedNote)
 })
-
 
 notesRouter.put('/:id', (request, response, next) => {
   const body = request.body
@@ -85,23 +44,13 @@ notesRouter.put('/:id', (request, response, next) => {
   const noteUpdate = {
     content: body.content,
     important: body.important,
-    /* date: body.date */
   }
 
   Note.findByIdAndUpdate(request.params.id, noteUpdate, { new: true })
     .then(updatedNote => {
-      if (updatedNote) {
-        response.json(updatedNote)
-      }
-      else {
-        response.status(404).send();
-      }
+      response.json(updatedNote)
     })
-    .catch(error => {
-      next(error)
-      //console.log(error)
-      //response.status(404).send()
-    })
+    .catch(error => next(error))
 })
 
 module.exports = notesRouter

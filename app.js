@@ -10,6 +10,9 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
+const supertest = require('supertest')
+const api = supertest(app)
+require('express-async-errors')
 
 const url = config.MONGODB_URI
 
@@ -27,11 +30,8 @@ mongoose.connect(url)
 
 
 app.use(express.static('build'))
-
 app.use(middleware.requestLogger)
-
 app.use('/api/notes', notesRouter)
-
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownPath)

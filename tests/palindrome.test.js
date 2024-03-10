@@ -18,6 +18,12 @@ test('palindrome of releveler', () => {
   expect(result).toBe('releveler')
 })
 
+/* test('reverse of saippuakauppias', () => {
+  const result = reverse('saippuakauppias')
+
+  expect(result).toBe('saippuakauppias')
+}) */
+
 /* test('palindrome of react', () => {
     const result = palindrome('react')
   

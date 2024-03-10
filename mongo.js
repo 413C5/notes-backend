@@ -15,7 +15,7 @@ if (process.argv.length < 4) {
 const password = process.argv[2]
 const message=process.argv[3]
 
-const url = `mongodb+srv://fullstack:${password}@cluster0.ezwn4oa.mongodb.net/app-note?retryWrites=true&w=majority`
+const url = `mongodb+srv://fullstack:${password}@cluster0.ezwn4oa.mongodb.net/app-note-test?retryWrites=true&w=majority`
 
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
@@ -35,16 +35,16 @@ const note = new Note({
   })
 
 //Insert
-/* note.save().then(result=>{
+note.save().then(result=>{
     console.log('note saved!')
     console.log(result)
     mongoose.connection.close()
-}) */
+})
 
 //Select
-Note.find({important:false}).then(result=>{
+/* Note.find({important:false}).then(result=>{
     result.forEach(note => {
         console.log(note)
     })
     mongoose.connection.close()
-})
+}) */
