@@ -25,7 +25,7 @@ notesRouter.delete('/:id', async (request, response) => {
 
 
 notesRouter.post('/', async (request, response) => {
-  //Tiene que tener la sintaxis del objeto
+  //It must have object sintax
   const body = request.body
 
   const note = new Note({
