@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest --verbose --runInBand",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy:full": "git add . && git commit -m uibuild && git push"
   },
   "author": "Alejandro González Zárate",
   "license": "ISC",
