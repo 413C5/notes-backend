@@ -1,4 +1,4 @@
-//mongodb+srv://fullstack:<password>@cluster0.ezwn4oa.mongodb.net/?retryWrites=true&w=majority
+//mongodb+srv://<user>:<password>@cluster0.ezwn4oa.mongodb.net/?retryWrites=true&w=majority
 
 const mongoose = require('mongoose')
 
